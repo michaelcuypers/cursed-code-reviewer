@@ -1,0 +1,254 @@
+/* SoulVault Halloween-themed authentication styles */
+
+.soul-vault-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0a0a0a 100%);
+  padding: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.soul-vault-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(107, 33, 168, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(220, 38, 38, 0.1) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.soul-vault-card {
+  background: rgba(26, 26, 26, 0.95);
+  border: 2px solid #4c1d95;
+  border-radius: 1rem;
+  padding: 2rem;
+  width: 100%;
+  max-width: 28rem;
+  box-shadow: 
+    0 0 20px rgba(107, 33, 168, 0.3),
+    0 0 40px rgba(107, 33, 168, 0.1);
+  position: relative;
+  z-index: 1;
+  animation: soul-vault-float 3s ease-in-out infinite;
+}
+
+@keyframes soul-vault-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.soul-vault-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.soul-vault-icon {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  animation: soul-vault-pulse 2s ease-in-out infinite;
+}
+
+@keyframes soul-vault-pulse {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.5));
+  }
+  50% {
+    transform: scale(1.1);
+    filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.8));
+  }
+}
+
+.soul-vault-brand {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(107, 33, 168, 0.5);
+}
+
+.soul-vault-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.soul-vault-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #f3f4f6;
+  margin: 0 0 0.5rem 0;
+  text-align: center;
+}
+
+.soul-vault-subtitle {
+  font-size: 0.875rem;
+  color: #9ca3af;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.soul-vault-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.soul-vault-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #d1d5db;
+}
+
+.soul-vault-input {
+  background: #0a0a0a;
+  border: 2px solid #4c1d95;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  color: #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.soul-vault-input:focus {
+  outline: none;
+  border-color: #6b21a8;
+  box-shadow: 0 0 0 3px rgba(107, 33, 168, 0.2);
+}
+
+.soul-vault-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.soul-vault-input::placeholder {
+  color: #6b7280;
+}
+
+.soul-vault-hint {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.soul-vault-button {
+  background: linear-gradient(135deg, #6b21a8 0%, #4c1d95 100%);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #f3f4f6;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.soul-vault-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #7c3aed 0%, #6b21a8 100%);
+  box-shadow: 
+    0 6px 8px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(107, 33, 168, 0.4);
+  transform: translateY(-2px);
+}
+
+.soul-vault-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.soul-vault-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.soul-vault-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.soul-vault-link {
+  background: none;
+  border: none;
+  color: #10b981;
+  font-size: 0.875rem;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.2s ease;
+  padding: 0.25rem;
+}
+
+.soul-vault-link:hover:not(:disabled) {
+  color: #34d399;
+}
+
+.soul-vault-link:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.soul-vault-error {
+  background: rgba(220, 38, 38, 0.1);
+  border: 1px solid #dc2626;
+  border-radius: 0.5rem;
+  padding: 0.875rem;
+  color: #fca5a5;
+  font-size: 0.875rem;
+  text-align: center;
+  animation: soul-vault-shake 0.5s ease;
+}
+
+@keyframes soul-vault-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.soul-vault-success {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid #10b981;
+  border-radius: 0.5rem;
+  padding: 0.875rem;
+  color: #6ee7b7;
+  font-size: 0.875rem;
+  text-align: center;
+  animation: soul-vault-fade-in 0.5s ease;
+}
+
+@keyframes soul-vault-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .soul-vault-card {
+    padding: 1.5rem;
+  }
+
+  .soul-vault-title {
+    font-size: 1.5rem;
+  }
+
+  .soul-vault-icon {
+    font-size: 3rem;
+  }
+}

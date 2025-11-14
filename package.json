@@ -1,0 +1,23 @@
+{
+  "name": "cursed-code-reviewer",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend",
+    "infrastructure"
+  ],
+  "scripts": {
+    "install:all": "npm install",
+    "build:frontend": "npm run build --workspace=frontend",
+    "build:backend": "npm run build --workspace=backend",
+    "build:infra": "npm run build --workspace=infrastructure",
+    "build": "npm run build:backend && npm run build:frontend && npm run build:infra",
+    "deploy:dev": "npm run deploy --workspace=infrastructure -- --context environment=dev",
+    "deploy:staging": "npm run deploy --workspace=infrastructure -- --context environment=staging",
+    "deploy:prod": "npm run deploy --workspace=infrastructure -- --context environment=prod"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,138 @@
+/* Global styles for Cursed Code Reviewer */
+
+@import url('https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Inter:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Halloween color palette */
+  --cursed-black: #0a0a0a;
+  --graveyard-gray: #1a1a1a;
+  --phantom-purple: #6b21a8;
+  --blood-red: #dc2626;
+  --toxic-green: #10b981;
+  --ghostly-white: #f3f4f6;
+  --shadow-purple: #4c1d95;
+  --haunted-orange: #ea580c;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--cursed-black);
+  color: var(--ghostly-white);
+}
+
+code {
+  font-family: 'Roboto Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cursed-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--phantom-purple);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--shadow-purple);
+}
+
+/* Spooky animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes ghostFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.animate-slideIn {
+  animation: slideIn 0.5s ease-out;
+}
+
+.animate-ghostFloat {
+  animation: ghostFloat 3s ease-in-out infinite;
+}
+
+/* Glow effects */
+.glow-purple {
+  box-shadow: 0 0 10px rgba(107, 33, 168, 0.5);
+}
+
+.glow-purple:hover {
+  box-shadow: 0 0 20px rgba(107, 33, 168, 0.8);
+}
+
+.glow-red {
+  box-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
+}
+
+.glow-red:hover {
+  box-shadow: 0 0 20px rgba(220, 38, 38, 0.8);
+}
+
+/* Text effects */
+.text-shadow-glow {
+  text-shadow: 0 0 10px currentColor;
+}
+
+.cursed-title {
+  font-family: 'Creepster', cursive;
+  color: var(--phantom-purple);
+  text-shadow: 0 0 20px rgba(107, 33, 168, 0.8);
+}
+
+.haunted-text {
+  font-family: 'Nosifer', cursive;
+  color: var(--blood-red);
+  text-shadow: 0 0 15px rgba(220, 38, 38, 0.6);
+}
