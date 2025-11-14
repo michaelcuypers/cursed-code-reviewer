@@ -233,9 +233,13 @@ export const useAuth = () => {
     try {
       await signOut();
       dispatch({ type: 'AUTH_LOGOUT' });
+      // Force page reload to clear all state and redirect to login
+      window.location.href = '/';
     } catch (error) {
       console.error('Sign out error:', error);
       dispatch({ type: 'AUTH_LOGOUT' });
+      // Force page reload even on error
+      window.location.href = '/';
     }
   };
 

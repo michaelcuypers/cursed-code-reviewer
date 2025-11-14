@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 import Lightning from './Lightning';
+import FallingText from './FallingText';
 import './SoulVault.css';
 
 type AuthView = 'signin' | 'signup' | 'verify' | 'reset' | 'confirm-reset';
@@ -39,7 +40,8 @@ export const SoulVault: React.FC<SoulVaultProps> = ({ onAuthenticated }) => {
     try {
       await signIn(email, password);
       setSuccessMessage('🦇 Welcome back to the darkness!');
-      // Navigation will happen automatically via useEffect when isAuthenticated changes
+      // Force page reload to dashboard to ensure auth state is fully loaded
+      window.location.href = '/dashboard';
     } catch (err: any) {
       setLocalError(err.message);
     }
@@ -122,8 +124,19 @@ export const SoulVault: React.FC<SoulVaultProps> = ({ onAuthenticated }) => {
 
   const renderSignIn = () => (
     <form onSubmit={handleSignIn} className="soul-vault-form">
-      <h2 className="soul-vault-title">🦇 Enter the Crypt</h2>
-      <p className="soul-vault-subtitle">Sign in to unleash the cursed reviewer</p>
+      <div style={{ height: '180px', marginBottom: '1rem' }}>
+        <FallingText
+          text="🦇 Enter the Crypt
+Sign in to unleash the cursed reviewer"
+          highlightWords={["Crypt", "cursed", "reviewer"]}
+          trigger="hover"
+          backgroundColor="transparent"
+          wireframes={false}
+          gravity={0.56}
+          fontSize="1.5rem"
+          mouseConstraintStiffness={0.9}
+        />
+      </div>
 
       <div className="soul-vault-field">
         <label htmlFor="email" className="soul-vault-label">

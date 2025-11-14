@@ -28,7 +28,7 @@ const Navigation: React.FC = () => {
 
   return (
     <nav className="bg-graveyard-gray border-b border-phantom-purple/30">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
             <Link to="/dashboard" className="flex items-center space-x-2">
@@ -118,7 +118,7 @@ const AppContent: React.FC = () => {
       </div>
       <div className="relative z-10">
         <Navigation />
-        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <main className="w-[85%] mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Routes>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/scanner" element={<Scanner />} />
