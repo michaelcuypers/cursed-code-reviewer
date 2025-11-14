@@ -39,18 +39,22 @@ export const useScanHistory = (params: UseScanHistoryParams) => {
       const response = await apiClient.get<{
         scans: HistoricalScan[];
         count: number;
+        totalCount: number;
         hasMore: boolean;
         lastKey?: string;
         message: string;
       }>(`/crypt-history?${queryParams.toString()}`);
+      
+      // Calculate total pages based on total count
+      const totalPages = Math.ceil(response.totalCount / params.pageSize);
       
       // Transform to match expected HistoryResponse format
       return {
         scans: response.scans,
         pagination: {
           currentPage: params.page,
-          totalPages: 1, // We don't have total pages with cursor pagination
-          totalScans: response.count,
+          totalPages: totalPages,
+          totalScans: response.totalCount,
           pageSize: params.pageSize,
         },
       } as HistoryResponse;

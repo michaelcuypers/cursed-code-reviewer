@@ -241,4 +241,38 @@ export class ScanService {
       throw new Error('Failed to retrieve scan history from TombstoneDB');
     }
   }
+
+  /**
+   * Get total count of scans for a user
+   */
+  async getTotalScanCount(soulId: string): Promise<number> {
+    try {
+      let count = 0;
+      let lastEvaluatedKey: any = undefined;
+
+      // Query all scans for the user and count them
+      do {
+        const queryParams: any = {
+          TableName: TOMBSTONE_TABLE,
+          IndexName: 'soulId-scanTimestamp-index',
+          KeyConditionExpression: 'soulId = :soulId',
+          ExpressionAttributeValues: {
+            ':soulId': soulId,
+          },
+          Select: 'COUNT',
+          ExclusiveStartKey: lastEvaluatedKey,
+        };
+
+        const result = await docClient.send(new QueryCommand(queryParams));
+        count += result.Count || 0;
+        lastEvaluatedKey = result.LastEvaluatedKey;
+      } while (lastEvaluatedKey);
+
+      return count;
+    } catch (error) {
+      console.error('Error getting total scan count:', error);
+      // Return 0 on error rather than failing the whole request
+      return 0;
+    }
+  }
 }

@@ -454,6 +454,9 @@ async function handleHistoryRetrieval(
       severity
     );
 
+    // Get total count of scans for this user (for pagination)
+    const totalCount = await scanService.getTotalScanCount(soulId);
+
     // Format response with issue counts
     const scans = await Promise.all(result.scans.map(async (scan) => {
       // Get issue count for this scan
@@ -475,6 +478,7 @@ async function handleHistoryRetrieval(
     const response: any = {
       scans,
       count: scans.length,
+      totalCount,
       message: scans.length === 0 
         ? '👻 No scans found in the crypt!' 
         : `⚰️ Retrieved ${scans.length} scan${scans.length > 1 ? 's' : ''} from the crypt!`,
