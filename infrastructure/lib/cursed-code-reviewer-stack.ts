@@ -124,7 +124,7 @@ export class CursedCodeReviewerStack extends cdk.Stack {
     // Cognito SoulPool User Pool
     const soulPool = new cognito.UserPool(this, 'SoulPool', {
       userPoolName: `cursed-code-reviewer-${environment}-soul-pool`,
-      selfSignUpEnabled: true,
+      selfSignUpEnabled: false,
       signInAliases: {
         email: true,
       },

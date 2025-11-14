@@ -23,7 +23,7 @@ export const SoulVault: React.FC<SoulVaultProps> = () => {
   const [localError, setLocalError] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
 
-  const { signIn, signUp, confirmSignUp, resetPassword, confirmResetPassword, error, loading, isAuthenticated } = useAuth();
+  const { signIn, resetPassword, confirmResetPassword, error, loading, isAuthenticated } = useAuth();
 
   // Redirect to dashboard when authenticated
   useEffect(() => {
@@ -42,45 +42,6 @@ export const SoulVault: React.FC<SoulVaultProps> = () => {
       setSuccessMessage('🦇 Welcome back to the darkness!');
       // Force page reload to dashboard to ensure auth state is fully loaded
       window.location.href = '/dashboard';
-    } catch (err: any) {
-      setLocalError(err.message);
-    }
-  };
-
-  const handleSignUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLocalError('');
-    setSuccessMessage('');
-
-    if (password !== confirmPassword) {
-      setLocalError('⚰️ Your passwords do not match. Try again, mortal!');
-      return;
-    }
-
-    if (password.length < 8) {
-      setLocalError('⚰️ Your password must be at least 8 characters long!');
-      return;
-    }
-
-    try {
-      await signUp(email, password);
-      setSuccessMessage('📧 A cursed verification code has been sent to your inbox!');
-      setView('verify');
-    } catch (err: any) {
-      setLocalError(err.message);
-    }
-  };
-
-  const handleVerify = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLocalError('');
-    setSuccessMessage('');
-
-    try {
-      await confirmSignUp(email, verificationCode);
-      setSuccessMessage('✅ Your soul is now bound! You may sign in.');
-      setView('signin');
-      setVerificationCode('');
     } catch (err: any) {
       setLocalError(err.message);
     }
@@ -177,130 +138,11 @@ Sign in to unleash the cursed reviewer"
       <div className="soul-vault-links">
         <button
           type="button"
-          onClick={() => setView('signup')}
-          className="soul-vault-link"
-          disabled={loading}
-        >
-          New soul? Join the darkness
-        </button>
-        <button
-          type="button"
           onClick={() => setView('reset')}
           className="soul-vault-link"
           disabled={loading}
         >
           Forgot your cursed password?
-        </button>
-      </div>
-    </form>
-  );
-
-  const renderSignUp = () => (
-    <form onSubmit={handleSignUp} className="soul-vault-form">
-      <h2 className="soul-vault-title">🧛 Bind Your Soul</h2>
-      <p className="soul-vault-subtitle">Create an account to join the cursed realm</p>
-
-      <div className="soul-vault-field">
-        <label htmlFor="email" className="soul-vault-label">
-          Email Address
-        </label>
-        <input
-          id="email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="soul-vault-input"
-          placeholder="your.soul@darkness.com"
-          required
-          disabled={loading}
-        />
-      </div>
-
-      <div className="soul-vault-field">
-        <label htmlFor="password" className="soul-vault-label">
-          Password
-        </label>
-        <input
-          id="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="soul-vault-input"
-          placeholder="••••••••"
-          required
-          disabled={loading}
-        />
-        <p className="soul-vault-hint">
-          Minimum 8 characters with uppercase, lowercase, numbers, and special characters
-        </p>
-      </div>
-
-      <div className="soul-vault-field">
-        <label htmlFor="confirmPassword" className="soul-vault-label">
-          Confirm Password
-        </label>
-        <input
-          id="confirmPassword"
-          type="password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="soul-vault-input"
-          placeholder="••••••••"
-          required
-          disabled={loading}
-        />
-      </div>
-
-      <button type="submit" className="soul-vault-button" disabled={loading}>
-        {loading ? '🕷️ Binding...' : '👻 Sign Up'}
-      </button>
-
-      <div className="soul-vault-links">
-        <button
-          type="button"
-          onClick={() => setView('signin')}
-          className="soul-vault-link"
-          disabled={loading}
-        >
-          Already cursed? Sign in
-        </button>
-      </div>
-    </form>
-  );
-
-  const renderVerify = () => (
-    <form onSubmit={handleVerify} className="soul-vault-form">
-      <h2 className="soul-vault-title">📧 Verify Your Soul</h2>
-      <p className="soul-vault-subtitle">Enter the code sent to {email}</p>
-
-      <div className="soul-vault-field">
-        <label htmlFor="code" className="soul-vault-label">
-          Verification Code
-        </label>
-        <input
-          id="code"
-          type="text"
-          value={verificationCode}
-          onChange={(e) => setVerificationCode(e.target.value)}
-          className="soul-vault-input"
-          placeholder="123456"
-          required
-          disabled={loading}
-        />
-      </div>
-
-      <button type="submit" className="soul-vault-button" disabled={loading}>
-        {loading ? '🕷️ Verifying...' : '✅ Verify'}
-      </button>
-
-      <div className="soul-vault-links">
-        <button
-          type="button"
-          onClick={() => setView('signin')}
-          className="soul-vault-link"
-          disabled={loading}
-        >
-          Back to sign in
         </button>
       </div>
     </form>
@@ -444,8 +286,6 @@ Sign in to unleash the cursed reviewer"
         )}
 
         {view === 'signin' && renderSignIn()}
-        {view === 'signup' && renderSignUp()}
-        {view === 'verify' && renderVerify()}
         {view === 'reset' && renderReset()}
         {view === 'confirm-reset' && renderConfirmReset()}
       </div>
