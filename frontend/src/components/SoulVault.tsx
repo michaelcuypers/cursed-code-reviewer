@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import Lightning from './Lightning';
 import './SoulVault.css';
 
 type AuthView = 'signin' | 'signup' | 'verify' | 'reset' | 'confirm-reset';
@@ -402,6 +403,15 @@ export const SoulVault: React.FC<SoulVaultProps> = ({ onAuthenticated }) => {
 
   return (
     <div className="soul-vault-container">
+      <div className="fixed inset-0 z-0">
+        <Lightning 
+          hue={280}
+          xOffset={0}
+          speed={0.5}
+          intensity={2}
+          size={3}
+        />
+      </div>
       <div className="soul-vault-card">
         <div className="soul-vault-header">
           <div className="soul-vault-icon">💀</div>

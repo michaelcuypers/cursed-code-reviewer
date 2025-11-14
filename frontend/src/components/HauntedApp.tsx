@@ -6,6 +6,7 @@ import { SoulVault } from './SoulVault';
 import { Dashboard } from '@/pages/Dashboard';
 import { Scanner } from '@/pages/Scanner';
 import { Button, Spinner } from './ui';
+import Lightning from './Lightning';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -105,16 +106,27 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-cursed-black">
-      <Navigation />
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/scanner" element={<Scanner />} />
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
-        </Routes>
-      </main>
+    <div className="min-h-screen bg-cursed-black relative">
+      <div className="fixed inset-0 z-0">
+        <Lightning 
+          hue={280}
+          xOffset={0}
+          speed={0.5}
+          intensity={2}
+          size={3}
+        />
+      </div>
+      <div className="relative z-10">
+        <Navigation />
+        <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Routes>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/scanner" element={<Scanner />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 };
