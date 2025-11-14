@@ -13,7 +13,7 @@ interface SoulVaultProps {
   onAuthenticated?: () => void;
 }
 
-export const SoulVault: React.FC<SoulVaultProps> = ({ onAuthenticated }) => {
+export const SoulVault: React.FC<SoulVaultProps> = () => {
   const navigate = useNavigate();
   const [view, setView] = useState<AuthView>('signin');
   const [email, setEmail] = useState('');
@@ -126,7 +126,7 @@ export const SoulVault: React.FC<SoulVaultProps> = ({ onAuthenticated }) => {
     <form onSubmit={handleSignIn} className="soul-vault-form">
       <div style={{ height: '180px', marginBottom: '1rem' }}>
         <FallingText
-          text="🦇 Enter the Crypt
+          text="🦇 Enter the Crypt.
 Sign in to unleash the cursed reviewer"
           highlightWords={["Crypt", "cursed", "reviewer"]}
           trigger="hover"

@@ -73,6 +73,54 @@ export class CursedCodeReviewerStack extends cdk.Stack {
       autoDeleteObjects: environment !== 'prod',
     });
 
+    // S3 Frontend Bucket
+    const frontendBucket = new s3.Bucket(this, 'FrontendBucket', {
+      bucketName: `cursed-code-reviewer-${environment}-frontend`,
+      encryption: s3.BucketEncryption.S3_MANAGED,
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      versioned: false,
+      removalPolicy: environment === 'prod' ? cdk.RemovalPolicy.RETAIN : cdk.RemovalPolicy.DESTROY,
+      autoDeleteObjects: environment !== 'prod',
+    });
+
+    // CloudFront Origin Access Identity
+    const originAccessIdentity = new cloudfront.OriginAccessIdentity(this, 'FrontendOAI', {
+      comment: `OAI for ${environment} frontend`,
+    });
+
+    frontendBucket.grantRead(originAccessIdentity);
+
+    // CloudFront Distribution
+    const distribution = new cloudfront.Distribution(this, 'FrontendDistribution', {
+      defaultBehavior: {
+        origin: new origins.S3Origin(frontendBucket, {
+          originAccessIdentity,
+        }),
+        viewerProtocolPolicy: cloudfront.ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
+        allowedMethods: cloudfront.AllowedMethods.ALLOW_GET_HEAD_OPTIONS,
+        cachedMethods: cloudfront.CachedMethods.CACHE_GET_HEAD_OPTIONS,
+        compress: true,
+      },
+      defaultRootObject: 'index.html',
+      errorResponses: [
+        {
+          httpStatus: 404,
+          responseHttpStatus: 200,
+          responsePagePath: '/index.html',
+          ttl: cdk.Duration.minutes(5),
+        },
+        {
+          httpStatus: 403,
+          responseHttpStatus: 200,
+          responsePagePath: '/index.html',
+          ttl: cdk.Duration.minutes(5),
+        },
+      ],
+      priceClass: cloudfront.PriceClass.PRICE_CLASS_100,
+      enabled: true,
+      comment: `Cursed Code Reviewer ${environment} Frontend`,
+    });
+
     // Cognito SoulPool User Pool
     const soulPool = new cognito.UserPool(this, 'SoulPool', {
       userPoolName: `cursed-code-reviewer-${environment}-soul-pool`,
@@ -350,6 +398,26 @@ export class CursedCodeReviewerStack extends cdk.Stack {
     new cdk.CfnOutput(this, 'CodeCryptBucketName', {
       value: codeCryptBucket.bucketName,
       description: 'S3 CodeCrypt Bucket Name',
+    });
+
+    new cdk.CfnOutput(this, 'FrontendBucketName', {
+      value: frontendBucket.bucketName,
+      description: 'S3 Frontend Bucket Name',
+    });
+
+    new cdk.CfnOutput(this, 'CloudFrontDistributionId', {
+      value: distribution.distributionId,
+      description: 'CloudFront Distribution ID',
+    });
+
+    new cdk.CfnOutput(this, 'CloudFrontDomainName', {
+      value: distribution.distributionDomainName,
+      description: 'CloudFront Distribution Domain Name',
+    });
+
+    new cdk.CfnOutput(this, 'FrontendUrl', {
+      value: `https://${distribution.distributionDomainName}`,
+      description: 'Frontend URL',
     });
 
     new cdk.CfnOutput(this, 'SoulPoolId', {

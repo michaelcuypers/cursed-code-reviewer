@@ -697,7 +697,6 @@ describe('CryptHistory Component', () => {
       await waitFor(() => {
         // Component should show the empty state since error message is empty string
         // which is still truthy in the error state check
-        const tryAgainButtons = screen.queryAllByText('Try Again');
         // If error is empty string, it might show empty state or error state
         // Let's just check that loading is done
         expect(screen.queryByText(/Excavating the crypt/i)).not.toBeInTheDocument();

@@ -35,13 +35,19 @@ const FallingText: React.FC<FallingTextProps> = ({
 
   useEffect(() => {
     if (!textRef.current) return;
-    const words = text.split(' ');
-    const newHTML = words
-      .map(word => {
-        const isHighlighted = highlightWords.some(hw => word.startsWith(hw));
-        return `<span class="word ${isHighlighted ? highlightClass : ''}">${word}</span>`;
+    // Split by newlines first to preserve line breaks
+    const lines = text.split('\n');
+    const newHTML = lines
+      .map(line => {
+        const words = line.split(' ');
+        return words
+          .map(word => {
+            const isHighlighted = highlightWords.some(hw => word.startsWith(hw));
+            return `<span class="word ${isHighlighted ? highlightClass : ''}">${word}</span>`;
+          })
+          .join(' ');
       })
-      .join(' ');
+      .join('<br>');
     textRef.current.innerHTML = newHTML;
   }, [text, highlightWords, highlightClass]);
 
