@@ -1,0 +1,25 @@
+{
+  "enabled": true,
+  "name": "Source to Docs Sync",
+  "description": "Watches TypeScript source files, configuration files, and shell scripts. When changes are detected, triggers documentation updates in README.md and other markdown files to keep them in sync with the codebase.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "**/*.ts",
+      "**/*.tsx",
+      "**/package.json",
+      "**/tsconfig.json",
+      "**/*.sh",
+      "**/vitest.config.ts",
+      "**/vite.config.ts",
+      "**/tailwind.config.js",
+      "**/postcss.config.js",
+      "**/cdk.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Source code files have been modified. Please review the changes and update the relevant documentation files (README.md, AUTHENTICATION.md, DEPLOYMENT.md, and any other *.md files in the repository) to reflect these changes. Ensure that:\n1. API changes are documented\n2. New features or components are described\n3. Configuration changes are explained\n4. Setup instructions remain accurate\n5. Architecture diagrams or descriptions are updated if needed\nFocus on keeping documentation clear, accurate, and synchronized with the current codebase."
+  }
+}
